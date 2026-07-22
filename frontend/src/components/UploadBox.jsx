@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useState, useRef } from "react";
 
-function UploadBox() {
+function UploadBox({ onAnalyze }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
 
@@ -49,11 +49,12 @@ function UploadBox() {
       )}
 
       {/* Analyze Button */}
-      <button
-        className="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl transition"
-      >
-        Analyze Resume
-      </button>
+     <button
+  onClick={onAnalyze}
+  className="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-xl transition"
+>
+  Analyze Resume
+</button>
 
     </div>
   );
