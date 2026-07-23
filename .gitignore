@@ -1,1 +1,5 @@
-node_modules/
+__pycache__/
+*.pyc
+venv/
+.env
+node_modules/node_modules/7:24 AM 7/23/2026
