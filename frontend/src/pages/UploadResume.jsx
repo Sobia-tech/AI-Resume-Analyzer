@@ -4,21 +4,27 @@ import ResultCard from "../components/ResultCard";
 import Loading from "../components/Loading";
 
 function UploadResume() {
-  const [showResult, setShowResult] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  const handleAnalyze = () => {
-    setShowResult(false);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+
+  const handleAnalyze = (data) => {
+
     setLoading(true);
 
     setTimeout(() => {
+
+      setResult(data);
+
       setLoading(false);
-      setShowResult(true);
+
     }, 2000);
+
   };
 
   return (
     <div className="min-h-screen bg-slate-950 text-white py-10">
+
       <div className="max-w-5xl mx-auto">
 
         <h1 className="text-5xl font-bold text-center">
@@ -33,11 +39,13 @@ function UploadResume() {
 
         {loading && <Loading />}
 
-        {showResult && <ResultCard />}
+        {result && <ResultCard result={result} />}
 
       </div>
+
     </div>
   );
+
 }
 
 export default UploadResume;

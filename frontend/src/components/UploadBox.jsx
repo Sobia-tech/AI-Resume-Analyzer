@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import axios from "axios";
 
 function UploadBox({ onAnalyze }) {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -8,14 +9,37 @@ function UploadBox({ onAnalyze }) {
     fileInputRef.current.click();
   };
 
-  return (
-    <div className="mt-8 border-2 border-dashed border-blue-500 rounded-2xl p-10 text-center">
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      alert("Please select a resume first.");
+      return;
+    }
 
-      <h2 className="text-3xl font-bold text-white">
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/upload",
+        formData
+      );
+
+      onAnalyze(response.data);
+
+    } catch (error) {
+      console.error(error);
+      alert("Backend connection failed.");
+    }
+  };
+
+  return (
+    <div className="mt-8 max-w-3xl mx-auto border-2 border-dashed border-blue-500 rounded-2xl p-8 text-center bg-slate-900 shadow-xl">
+
+      <h2 className="text-2xl font-bold text-white">
         📄 Upload Resume
       </h2>
 
-      <p className="text-gray-400 mt-4">
+      <p className="text-gray-400 mt-3 text-sm">
         Drag & Drop your resume here
       </p>
 
@@ -23,7 +47,6 @@ function UploadBox({ onAnalyze }) {
         PDF • DOC • DOCX
       </p>
 
-      {/* Hidden Input */}
       <input
         ref={fileInputRef}
         type="file"
@@ -33,7 +56,6 @@ function UploadBox({ onAnalyze }) {
         }}
       />
 
-      {/* Browse Resume Button */}
       <button
         onClick={handleBrowseClick}
         className="mt-8 bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-xl transition"
@@ -41,20 +63,18 @@ function UploadBox({ onAnalyze }) {
         Browse Resume
       </button>
 
-      {/* Selected File */}
       {selectedFile && (
         <p className="mt-6 text-green-400 font-semibold">
           ✅ Selected File: {selectedFile.name}
         </p>
       )}
 
-      {/* Analyze Button */}
-     <button
-  onClick={onAnalyze}
-  className="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-xl transition"
->
-  Analyze Resume
-</button>
+      <button
+        onClick={handleUpload}
+        className="mt-8 bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-xl text-white transition"
+      >
+        Analyze Resume
+      </button>
 
     </div>
   );
