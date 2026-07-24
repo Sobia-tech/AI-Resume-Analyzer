@@ -206,7 +206,7 @@ function ResultCard({ result }) {
 
 <div className="grid md:grid-cols-2 gap-5 mt-8">
 
-  {/* Strengths */}
+  {/* Strengths */}git status
 
   <div className="bg-slate-900 rounded-xl p-5 border border-green-500">
 
